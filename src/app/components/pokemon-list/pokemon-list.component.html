@@ -1,0 +1,27 @@
+<div class="pokemon-list-container">
+    <!-- Pokemon Grid -->
+    <div class="pokemon-grid">
+      <app-pokemon-card
+        *ngFor="let pokemon of pokemons"
+        [pokemon]="pokemon"
+        (cardClick)="onPokemonClick($event)">
+      </app-pokemon-card>
+    </div>
+  
+    <!-- Loading Spinner -->
+    <div class="spinner-container" *ngIf="loading">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  
+    <!-- Load More Button -->
+    <div class="load-more-container" *ngIf="!loading && pokemons.length > 0">
+      <button mat-raised-button color="primary" (click)="loadMore()">
+        Load More Pokémon
+      </button>
+    </div>
+  
+    <!-- No Results Message -->
+    <div class="no-results" *ngIf="!loading && pokemons.length === 0">
+      <p>No Pokémon found</p>
+    </div>
+  </div>

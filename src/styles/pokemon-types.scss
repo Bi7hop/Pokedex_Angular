@@ -1,0 +1,44 @@
+.bg-grass { background-color: #78c850; }
+.bg-fire { background-color: #f08030; }
+.bg-water { background-color: #6890f0; }
+.bg-bug { background-color: #a8b820; }
+.bg-normal { background-color: #a8a878; }
+.bg-poison { background-color: #a040a0; }
+.bg-electric { background-color: #f8d030; }
+.bg-ground { background-color: #e0c068; }
+.bg-fairy { background-color: #ee99ac; }
+.bg-fighting { background-color: #c03028; }
+.bg-psychic { background-color: #f85888; }
+.bg-rock { background-color: #b8a038; }
+.bg-ghost { background-color: #705898; }
+.bg-ice { background-color: #98d8d8; }
+.bg-dragon { background-color: #7038f8; }
+.bg-dark { background-color: #705848; }
+.bg-steel { background-color: #b8b8d0; }
+.bg-flying { background-color: #a890f0; }
+
+// Chip Styles für Pokemon-Typen
+.type-grass { background-color: darken(#78c850, 10%) !important; }
+.type-fire { background-color: darken(#f08030, 10%) !important; }
+.type-water { background-color: darken(#6890f0, 10%) !important; }
+.type-bug { background-color: darken(#a8b820, 10%) !important; }
+.type-normal { background-color: darken(#a8a878, 10%) !important; }
+.type-poison { background-color: darken(#a040a0, 10%) !important; }
+.type-electric { background-color: darken(#f8d030, 10%) !important; }
+.type-ground { background-color: darken(#e0c068, 10%) !important; }
+.type-fairy { background-color: darken(#ee99ac, 10%) !important; }
+.type-fighting { background-color: darken(#c03028, 10%) !important; }
+.type-psychic { background-color: darken(#f85888, 10%) !important; }
+.type-rock { background-color: darken(#b8a038, 10%) !important; }
+.type-ghost { background-color: darken(#705898, 10%) !important; }
+.type-ice { background-color: darken(#98d8d8, 10%) !important; }
+.type-dragon { background-color: darken(#7038f8, 10%) !important; }
+.type-dark { background-color: darken(#705848, 10%) !important; }
+.type-steel { background-color: darken(#b8b8d0, 10%) !important; }
+.type-flying { background-color: darken(#a890f0, 10%) !important; }
+
+// Gemeinsame Styles für Type-Chips
+.mat-mdc-chip {
+  color: white !important;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}

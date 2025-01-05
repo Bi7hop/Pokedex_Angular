@@ -1,0 +1,100 @@
+<div class="detail-container" [ngClass]="'bg-' + pokemon.types[0].type.name">
+  <div class="card">
+    <!-- Header -->
+    <div class="header">
+      <h2>{{pokemon.name | titlecase}}</h2>
+      <span class="id">#{{pokemon.id}}</span>
+    </div>
+
+    <!-- Pokemon Image -->
+    <div class="image-container">
+      <img [src]="pokemon.sprites.other.home.front_default" [alt]="pokemon.name">
+      <div class="types">
+        <span *ngFor="let type of pokemon.types" [ngClass]="'type-' + type.type.name">
+          {{type.type.name}}
+        </span>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center" class="pokemon-tabs">
+      <!-- Stats Tab -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>bar_chart</mat-icon>
+          <span>Stats</span>
+        </ng-template>
+        <div class="tab-content">
+          <div class="stats">
+            <div class="stat-item" *ngFor="let stat of pokemon.stats">
+              <span class="stat-name">{{stat.stat.name | titlecase}}</span>
+              <div class="stat-bar">
+                <div class="stat-fill" [style.width.%]="stat.base_stat/2" 
+                     [style.background]="getStatColor(stat.base_stat)">
+                  <span class="stat-value">{{stat.base_stat}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="physical-stats">
+              <div>
+                <mat-icon>height</mat-icon>
+                <span>Height: {{pokemon.height/10}}m</span>
+              </div>
+              <div>
+                <mat-icon>monitor_weight</mat-icon>
+                <span>Weight: {{pokemon.weight/10}}kg</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- Evolution Tab -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>schema</mat-icon>
+          <span>Evolution</span>
+        </ng-template>
+        <div class="tab-content">
+          <div class="evolution-chain">
+            <div class="evolution-stage" *ngFor="let stage of evolutionChain; let i = index">
+              <div class="evolution-pokemon">
+                <img [src]="stage.sprite" [alt]="stage.name">
+                <span class="pokemon-name">{{stage.name | titlecase}}</span>
+              </div>
+              <mat-icon *ngIf="i < evolutionChain.length - 1" class="evolution-arrow">
+                arrow_forward
+              </mat-icon>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- Info Tab -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>info</mat-icon>
+          <span>Info</span>
+        </ng-template>
+        <div class="tab-content">
+          <p class="flavor-text">{{pokemonDescription}}</p>
+          <div class="abilities">
+            <h4>Abilities</h4>
+            <div class="ability-list">
+              <span *ngFor="let ability of pokemon.abilities">
+                {{ability.ability.name | titlecase}}
+              </span>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+
+    <!-- Close Button -->
+    <div class="close-button">
+      <button mat-icon-button (click)="close()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

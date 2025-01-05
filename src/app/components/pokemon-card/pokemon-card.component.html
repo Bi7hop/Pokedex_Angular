@@ -1,0 +1,20 @@
+<div class="pokemon-card" [ngClass]="'bg-' + getMainType()" (click)="onCardClick()">
+  <div class="card-content">
+    <div class="id-circle">#{{pokemon().id}}</div>
+    
+    <div class="pokemon-info">
+      <h2>{{pokemon().name | titlecase}}</h2>
+    </div>
+
+    <div class="image-container">
+      <div class="image-background"></div>
+      <img [src]="pokemon().sprites.other.home.front_default" [alt]="pokemon().name">
+    </div>
+    
+    <div class="type-container">
+      <div class="type-tag" *ngFor="let type of pokemon().types">
+        {{type.type.name}}
+      </div>
+    </div>
+  </div>
+</div>
