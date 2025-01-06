@@ -1,37 +1,109 @@
+.pokedex-background {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  background-image: url('../../../assets/gengar.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(40, 0, 60, 0.85) 0%,
+      rgba(80, 0, 120, 0.75) 100%
+    );
+    z-index: 1;
+  }
+}
+
 .pokemon-list-container {
-    padding: 16px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
+  position: relative;
+  z-index: 2;
+  padding: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pokemon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+  justify-items: center;
+  margin-bottom: 24px;
+  padding: 20px 0;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  padding: 24px;
   
-  .pokemon-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 16px;
-    justify-items: center;
-    margin-bottom: 24px;
-  }
-  
-  .spinner-container {
-    display: flex;
-    justify-content: center;
-    padding: 24px;
-  }
-  
-  .load-more-container {
-    display: flex;
-    justify-content: center;
-    padding: 24px;
-  
-    button {
-      min-width: 200px;
+  .mat-mdc-progress-spinner {
+    circle {
+      stroke: #fff;
     }
   }
-  
-  .no-results {
-    display: flex;
-    justify-content: center;
-    padding: 48px;
-    color: rgba(0, 0, 0, 0.6);
-    font-size: 1.2rem;
+}
+
+.load-more-container {
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+
+  button {
+    min-width: 200px;
+    background: linear-gradient(135deg, #7b2cbf 0%, #9d4edd 100%) !important;
+    color: white;
+    font-size: 1.1rem;
+    padding: 12px 24px;
+    border-radius: 25px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(123, 44, 191, 0.4) !important;
+    }
   }
+}
+
+.no-results {
+  display: flex;
+  justify-content: center;
+  padding: 48px;
+  color: white;
+  font-size: 1.2rem;
+  background: rgba(123, 44, 191, 0.2);
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .pokemon-list-container {
+    padding: 10px;
+  }
+
+  .pokemon-grid {
+    gap: 16px;
+  }
+
+  .load-more-container button {
+    min-width: 180px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pokemon-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+}

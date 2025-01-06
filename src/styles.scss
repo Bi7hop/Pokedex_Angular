@@ -1,86 +1,94 @@
 @import './styles/pokemon-types';
 
-* {
+/* Reset und Basis-Styles */
+*, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-.pokemon-detail-dialog {
-    .mat-mdc-dialog-container {
-      padding: 0;
-      border-radius: 20px;
-      overflow: hidden;
-      background: transparent;
-      box-shadow: none;
-    }
-  }
-  
-  .cdk-overlay-pane {
-    will-change: transform, opacity;
-  }
-
-  .pokemon-detail-dialog {
-    .mdc-dialog__surface {
-      background: transparent !important;
-      box-shadow: none !important;
-    }
-  
-    .mdc-dialog__container {
-      transition: transform 0.3s ease;
-    }
-  }
-  
-  .no-padding {
-    .mat-mdc-dialog-container {
-      padding: 0;
-    }
-  }
-  
-  .dark-backdrop {
-    background: rgba(0, 0, 0, 0.7);
-  }
-
-  // styles.scss
-
-// Dialog Styles
-.pokemon-detail-dialog {
-  .mdc-dialog__container {
-    transition: transform 0.4s ease-out !important;
-  }
-
-  .mdc-dialog__surface {
-    background: transparent !important;
-    box-shadow: none !important;
-    overflow: visible !important;
-  }
-
-  .mat-mdc-dialog-container {
+html, body {
+    margin: 0;
     padding: 0;
-    overflow: visible;
-  }
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: #000; /* Verhindert weißes Aufblitzen */
+}
+
+/* Dialog Styles */
+.pokemon-detail-dialog {
+    .mat-mdc-dialog-container {
+        padding: 0;
+        border-radius: 20px;
+        overflow: hidden;
+        background: transparent;
+        box-shadow: none;
+    }
+}
+
+.cdk-overlay-pane {
+    will-change: transform, opacity;
+}
+
+.pokemon-detail-dialog {
+    .mdc-dialog__surface {
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .mdc-dialog__container {
+        transition: transform 0.3s ease;
+    }
+}
+
+.no-padding {
+    .mat-mdc-dialog-container {
+        padding: 0;
+    }
+}
+
+.dark-backdrop {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+/* Erweiterte Dialog Styles */
+.pokemon-detail-dialog {
+    .mdc-dialog__container {
+        transition: transform 0.4s ease-out !important;
+    }
+
+    .mdc-dialog__surface {
+        background: transparent !important;
+        box-shadow: none !important;
+        overflow: visible !important;
+    }
+
+    .mat-mdc-dialog-container {
+        padding: 0;
+        overflow: visible;
+    }
 }
 
 .dialog-backdrop {
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(5px);
-  transition: all 0.4s ease-out !important;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px);
+    transition: all 0.4s ease-out !important;
 }
 
-// Animation für die Dialog-Container
+/* Dialog Animation */
 .mat-mdc-dialog-container.mdc-dialog__surface {
-  opacity: 0;
-  transform: scale(0.7);
-  animation: dialogEnter 0.4s ease-out forwards;
+    opacity: 0;
+    transform: scale(0.7);
+    animation: dialogEnter 0.4s ease-out forwards;
 }
 
 @keyframes dialogEnter {
-  from {
-    opacity: 0;
-    transform: scale(0.7);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+    from {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
