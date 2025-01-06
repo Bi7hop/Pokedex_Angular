@@ -1,19 +1,19 @@
 <mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <img 
-      class="pokeball" 
-      src="assets/pokeball.png" 
-      alt="Pokeball"
-      (click)="onLogoClick()"
+  <img 
+    class="pokeball" 
+    src="assets/pokeball.png" 
+    alt="Pokeball"
+    (click)="onLogoClick()"
+  >
+  <span class="title">Pokédex</span>
+  
+  <div class="search-container">
+    <input 
+      class="search-input" 
+      type="text" 
+      [formControl]="searchControl"
+      placeholder="Search Pokémon..."
     >
-    <span class="title">Pokédex</span>
-    
-    <div class="search-container">
-      <mat-form-field appearance="outline">
-        <mat-label>Find Pokémon</mat-label>
-        <input matInput [formControl]="searchControl">
-        <mat-icon matSuffix>search</mat-icon>
-      </mat-form-field>
-    </div>
-  </mat-toolbar-row>
+    <mat-icon class="search-icon">search</mat-icon>
+  </div>
 </mat-toolbar>
