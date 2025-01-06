@@ -5,7 +5,7 @@
       <h2>{{pokemon.name | titlecase}}</h2>
       <span class="id">#{{pokemon.id}}</span>
     </div>
-
+ 
     <!-- Pokemon Image -->
     <div class="image-container">
       <img [src]="pokemon.sprites.other.home.front_default" [alt]="pokemon.name">
@@ -15,7 +15,7 @@
         </span>
       </div>
     </div>
-
+ 
     <!-- Tabs -->
     <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center" class="pokemon-tabs">
       <!-- Stats Tab -->
@@ -48,7 +48,7 @@
           </div>
         </div>
       </mat-tab>
-
+ 
       <!-- Evolution Tab -->
       <mat-tab>
         <ng-template mat-tab-label>
@@ -56,20 +56,38 @@
           <span>Evolution</span>
         </ng-template>
         <div class="tab-content">
-          <div class="evolution-chain">
-            <div class="evolution-stage" *ngFor="let stage of evolutionChain; let i = index">
-              <div class="evolution-pokemon">
-                <img [src]="stage.sprite" [alt]="stage.name">
-                <span class="pokemon-name">{{stage.name | titlecase}}</span>
-              </div>
-              <mat-icon *ngIf="i < evolutionChain.length - 1" class="evolution-arrow">
-                arrow_forward
-              </mat-icon>
+          <div class="evolution-chain" *ngIf="evolutionChain.length > 0">
+            <!-- First Pokemon -->
+            <div class="evolution-stage">
+              <img [src]="evolutionChain[0].sprite" [alt]="evolutionChain[0].name">
+              <span class="pokemon-name">{{evolutionChain[0].name | titlecase}}</span>
+            </div>
+            
+            <!-- Arrow 1 -->
+            <div class="arrow-container" *ngIf="evolutionChain.length > 1">
+              <mat-icon>arrow_forward</mat-icon>
+            </div>
+            
+            <!-- Second Pokemon -->
+            <div class="evolution-stage" *ngIf="evolutionChain.length > 1">
+              <img [src]="evolutionChain[1].sprite" [alt]="evolutionChain[1].name">
+              <span class="pokemon-name">{{evolutionChain[1].name | titlecase}}</span>
+            </div>
+            
+            <!-- Arrow 2 -->
+            <div class="arrow-container" *ngIf="evolutionChain.length > 2">
+              <mat-icon>arrow_forward</mat-icon>
+            </div>
+            
+            <!-- Third Pokemon -->
+            <div class="evolution-stage" *ngIf="evolutionChain.length > 2">
+              <img [src]="evolutionChain[2].sprite" [alt]="evolutionChain[2].name">
+              <span class="pokemon-name">{{evolutionChain[2].name | titlecase}}</span>
             </div>
           </div>
         </div>
       </mat-tab>
-
+ 
       <!-- Info Tab -->
       <mat-tab>
         <ng-template mat-tab-label>
@@ -77,19 +95,21 @@
           <span>Info</span>
         </ng-template>
         <div class="tab-content">
-          <p class="flavor-text">{{pokemonDescription}}</p>
-          <div class="abilities">
-            <h4>Abilities</h4>
-            <div class="ability-list">
-              <span *ngFor="let ability of pokemon.abilities">
-                {{ability.ability.name | titlecase}}
-              </span>
+          <div class="info-content">
+            <p class="flavor-text">{{pokemonDescription}}</p>
+            <div class="abilities">
+              <h4>Abilities</h4>
+              <div class="ability-list">
+                <span *ngFor="let ability of pokemon.abilities">
+                  {{ability.ability.name | titlecase}}
+                </span>
+              </div>
             </div>
           </div>
         </div>
       </mat-tab>
     </mat-tab-group>
-
+ 
     <!-- Close Button -->
     <div class="close-button">
       <button mat-icon-button (click)="close()">
@@ -97,4 +117,4 @@
       </button>
     </div>
   </div>
-</div>
+ </div>
