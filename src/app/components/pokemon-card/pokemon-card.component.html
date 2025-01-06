@@ -12,7 +12,9 @@
     </div>
     
     <div class="type-container">
-      <div class="type-tag" *ngFor="let type of pokemon().types">
+      <div class="type-tag" 
+           *ngFor="let type of pokemon().types"
+           [attr.data-type]="type.type.name">
         {{type.type.name}}
       </div>
     </div>

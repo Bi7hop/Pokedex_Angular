@@ -1,3 +1,79 @@
+// Pokemon type color variables
+$type-colors: (
+  normal: (
+    start: #A8A878,
+    end: #8A8A59
+  ),
+  fire: (
+    start: #F08030,
+    end: #C73015
+  ),
+  water: (
+    start: #6890F0,
+    end: #445E9C
+  ),
+  electric: (
+    start: #F8D030,
+    end: #A1871F
+  ),
+  grass: (
+    start: #78C850,
+    end: #4E8234
+  ),
+  ice: (
+    start: #98D8D8,
+    end: #638D8D
+  ),
+  fighting: (
+    start: #C03028,
+    end: #7D1F1A
+  ),
+  poison: (
+    start: #A040A0,
+    end: #682A68
+  ),
+  ground: (
+    start: #E0C068,
+    end: #927D44
+  ),
+  flying: (
+    start: #A890F0,
+    end: #6D5E9C
+  ),
+  psychic: (
+    start: #F85888,
+    end: #A13959
+  ),
+  bug: (
+    start: #A8B820,
+    end: #6D7815
+  ),
+  rock: (
+    start: #B8A038,
+    end: #786824
+  ),
+  ghost: (
+    start: #705898,
+    end: #493963
+  ),
+  dragon: (
+    start: #7038F8,
+    end: #4924A1
+  ),
+  dark: (
+    start: #705848,
+    end: #49392F
+  ),
+  steel: (
+    start: #B8B8D0,
+    end: #787887
+  ),
+  fairy: (
+    start: #EE99AC,
+    end: #9B6470
+  )
+);
+
 .pokemon-card {
   width: 220px;
   height: 300px;
@@ -6,8 +82,21 @@
   position: relative;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background: linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.2) 100%);
   box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+
+  @each $type, $colors in $type-colors {
+    &.bg-#{$type} {
+      background: linear-gradient(135deg, map-get($colors, start) 0%, map-get($colors, end) 100%);
+
+      .type-tag {
+        &[data-type="#{$type}"] {
+          background: map-get($colors, start);
+          color: white;
+          text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+      }
+    }
+  }
 
   &:hover {
     transform: translateY(-5px);
@@ -88,8 +177,6 @@
 }
 
 .type-tag {
-  background: rgba(255,255,255,0.9);
-  color: #333;
   padding: 4px 12px;
   border-radius: 15px;
   font-size: 0.9rem;
