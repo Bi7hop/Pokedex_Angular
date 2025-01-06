@@ -1,4 +1,3 @@
-// Pokemon type color variables
 $type-colors: (
   normal: (
     start: #A8A878,
@@ -89,10 +88,20 @@ $type-colors: (
       background: linear-gradient(135deg, map-get($colors, start) 0%, map-get($colors, end) 100%);
 
       .type-tag {
+        color: white;
+        
         &[data-type="#{$type}"] {
           background: map-get($colors, start);
-          color: white;
           text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+          
+          &:first-child {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+          }
+          
+          &:not(:first-child) {
+            background: transparentize(map-get($colors, start), 0.1);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+          }
         }
       }
     }

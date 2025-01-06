@@ -59,21 +59,31 @@
   margin-top: 8px;
 
   span {
-    background: rgba(255, 255, 255, 0.9);
-    color: #333;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
     padding: 4px 12px;
     border-radius: 15px;
     font-size: 0.9rem;
     font-weight: 500;
     text-transform: capitalize;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+
+    &:first-child {
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    }
+    
+    &:not(:first-child) {
+      background: rgba(255, 255, 255, 0.15);
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    }
   }
 }
 
 ::ng-deep {
   .mat-mdc-tab-header {
     --mdc-tab-indicator-active-indicator-color: white;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   }
 
   .mat-mdc-tab-body-wrapper {
@@ -87,19 +97,35 @@
 
   .mdc-tab__text-label {
     color: white !important;
-    opacity: 0.7;
+    opacity: 0.85;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
   }
 
   .mat-mdc-tab {
-    opacity: 0.7;
+    opacity: 0.85;
     transition: opacity 0.3s ease;
 
     &.mdc-tab--active {
       opacity: 1;
+      
+      .mdc-tab__text-label {
+        opacity: 1;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+      }
     }
 
     mat-icon {
       margin-right: 8px;
+      color: white;
+      opacity: 0.85;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    &:hover {
+      .mdc-tab__text-label,
+      mat-icon {
+        opacity: 1;
+      }
     }
   }
 }
@@ -249,14 +275,15 @@
       gap: 8px;
 
       span {
-        background: rgba(255, 255, 255, 0.9);
-        color: #333;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
         padding: 4px 12px;
         border-radius: 15px;
         font-size: 0.9rem;
         font-weight: 500;
         text-transform: capitalize;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
       }
     }
   }
@@ -278,7 +305,6 @@
     }
   }
 }
-
 
 @media screen and (max-width: 768px) {
   .detail-container {
