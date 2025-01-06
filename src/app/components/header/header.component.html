@@ -11,7 +11,7 @@
     <div class="search-container">
       <mat-form-field appearance="outline">
         <mat-label>Find Pokémon</mat-label>
-        <input matInput (input)="onSearch($event)">
+        <input matInput [formControl]="searchControl">
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
     </div>

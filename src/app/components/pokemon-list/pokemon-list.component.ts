@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PokemonCardComponent } from '../pokemon-card/pokemon-card.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -7,6 +7,8 @@ import { MatDialog, MatDialogModule, MatDialogConfig } from '@angular/material/d
 import { Pokemon } from '../../interfaces/pokemon.interface';
 import { PokemonService } from '../../services/pokemon.service';
 import { PokemonDetailComponent } from '../pokemon-detail/pokemon-detail.component';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -21,11 +23,14 @@ import { PokemonDetailComponent } from '../pokemon-detail/pokemon-detail.compone
   templateUrl: './pokemon-list.component.html',
   styleUrl: './pokemon-list.component.scss'
 })
-export class PokemonListComponent implements OnInit {
-  pokemons: Pokemon[] = [];
+export class PokemonListComponent implements OnInit, OnDestroy {
+  allPokemons: Pokemon[] = [];         
+  displayedPokemons: Pokemon[] = [];   
+  filteredPokemons: Pokemon[] = [];    
   loading = false;
-  currentPage = 1;
-  pageSize = 20;
+  initialLoading = true;              
+  visiblePokemonCount = 20;           
+  private destroy$ = new Subject<void>();
 
   constructor(
     private pokemonService: PokemonService,
@@ -33,19 +38,36 @@ export class PokemonListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.loadInitialPokemon();
+    this.loadAllPokemon();
+    this.setupSearchSubscription();
   }
 
-  loadInitialPokemon() {
-    this.loading = true;
-    this.pokemonService.getPokemonBatch(1, this.pageSize).subscribe({
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private setupSearchSubscription() {
+    this.pokemonService.getFilteredPokemon()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(filteredPokemon => {
+        this.filteredPokemons = filteredPokemon;
+        this.displayedPokemons = this.filteredPokemons.slice(0, this.visiblePokemonCount);
+      });
+  }
+
+  loadAllPokemon() {
+    this.initialLoading = true;
+    this.pokemonService.getPokemonBatch(1, 151).subscribe({
       next: (pokemon) => {
-        this.pokemons = pokemon;
-        this.loading = false;
+        this.allPokemons = pokemon;
+        this.filteredPokemons = pokemon;
+        this.displayedPokemons = pokemon.slice(0, this.visiblePokemonCount);
+        this.initialLoading = false;
       },
       error: (error) => {
         console.error('Error loading Pokemon:', error);
-        this.loading = false;
+        this.initialLoading = false;
       }
     });
   }
@@ -54,19 +76,14 @@ export class PokemonListComponent implements OnInit {
     if (this.loading) return;
     
     this.loading = true;
-    const nextPage = this.currentPage * this.pageSize + 1;
+    const currentLength = this.displayedPokemons.length;
+    const newPokemons = this.filteredPokemons.slice(
+      currentLength, 
+      currentLength + this.visiblePokemonCount
+    );
     
-    this.pokemonService.getPokemonBatch(nextPage, this.pageSize).subscribe({
-      next: (newPokemon) => {
-        this.pokemons = [...this.pokemons, ...newPokemon];
-        this.currentPage++;
-        this.loading = false;
-      },
-      error: (error) => {
-        console.error('Error loading more Pokemon:', error);
-        this.loading = false;
-      }
-    });
+    this.displayedPokemons = [...this.displayedPokemons, ...newPokemons];
+    this.loading = false;
   }
 
   onPokemonClick(pokemon: Pokemon) {
@@ -81,5 +98,10 @@ export class PokemonListComponent implements OnInit {
     dialogConfig.exitAnimationDuration = '400ms';
 
     this.dialog.open(PokemonDetailComponent, dialogConfig);
+  }
+
+ 
+  hasMorePokemon(): boolean {
+    return this.displayedPokemons.length < this.filteredPokemons.length;
   }
 }

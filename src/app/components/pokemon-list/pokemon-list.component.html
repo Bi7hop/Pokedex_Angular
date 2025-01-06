@@ -1,29 +1,37 @@
 <div class="pokedex-background">
   <div class="pokemon-list-container">
-    <!-- Pokemon Grid -->
-    <div class="pokemon-grid">
-      <app-pokemon-card
-        *ngFor="let pokemon of pokemons"
-        [pokemon]="pokemon"
-        (cardClick)="onPokemonClick($event)">
-      </app-pokemon-card>
-    </div>
-  
-    <!-- Loading Spinner -->
-    <div class="spinner-container" *ngIf="loading">
+    <!-- Initial Loading Spinner -->
+    <div class="spinner-container" *ngIf="initialLoading">
       <mat-spinner diameter="40"></mat-spinner>
+      <p class="loading-text">Loading all Pokémon...</p>
     </div>
-  
-    <!-- Load More Button -->
-    <div class="load-more-container" *ngIf="!loading && pokemons.length > 0">
-      <button mat-raised-button color="primary" (click)="loadMore()">
-        Load More Pokémon
-      </button>
-    </div>
-  
-    <!-- No Results Message -->
-    <div class="no-results" *ngIf="!loading && pokemons.length === 0">
-      <p>No Pokémon found</p>
-    </div>
+
+    <ng-container *ngIf="!initialLoading">
+      <!-- Pokemon Grid -->
+      <div class="pokemon-grid">
+        <app-pokemon-card
+          *ngFor="let pokemon of displayedPokemons"
+          [pokemon]="pokemon"
+          (cardClick)="onPokemonClick($event)">
+        </app-pokemon-card>
+      </div>
+    
+      <!-- Loading More Spinner -->
+      <div class="spinner-container" *ngIf="loading">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+    
+      <!-- Load More Button -->
+      <div class="load-more-container" *ngIf="!loading && hasMorePokemon()">
+        <button mat-raised-button color="primary" (click)="loadMore()">
+          Load More Pokémon
+        </button>
+      </div>
+    
+      <!-- No Results Message -->
+      <div class="no-results" *ngIf="!loading && filteredPokemons.length === 0">
+        <p>No Pokémon found</p>
+      </div>
+    </ng-container>
   </div>
 </div>
