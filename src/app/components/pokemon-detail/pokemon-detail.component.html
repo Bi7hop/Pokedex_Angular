@@ -1,4 +1,17 @@
 <div class="detail-container" [ngClass]="'bg-' + pokemon.types[0].type.name">
+  <!-- Navigation Buttons -->
+  <button mat-icon-button class="nav-button prev-button" 
+          (click)="navigateToPrevious()"
+          *ngIf="!isFirstPokemon">
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+  
+  <button mat-icon-button class="nav-button next-button" 
+          (click)="navigateToNext()"
+          *ngIf="!isLastPokemon">
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+
   <div class="card">
     <!-- Header -->
     <div class="header">
@@ -117,4 +130,4 @@
       </button>
     </div>
   </div>
- </div>
+</div>

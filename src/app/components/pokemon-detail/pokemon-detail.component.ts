@@ -7,6 +7,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { Pokemon, PokemonSpecies, EvolutionChain, FlavorTextEntry } from '../../interfaces/pokemon.interface';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { PokemonService } from '../../services/pokemon.service';
+import { firstValueFrom } from 'rxjs';
 
 interface EvolutionStage {
   name: string;
@@ -42,15 +43,24 @@ export class PokemonDetailComponent implements OnInit {
   selectedTab = 0;
   evolutionChain: EvolutionStage[] = [];
   pokemonDescription = '';
+  isFirstPokemon = false;
+  isLastPokemon = false;
 
   constructor(
     private dialogRef: MatDialogRef<PokemonDetailComponent>,
     @Inject(MAT_DIALOG_DATA) public pokemon: Pokemon,
     private pokemonService: PokemonService
-  ) {}
+  ) {
+    this.checkPokemonBoundaries();
+  }
 
   ngOnInit() {
     this.loadPokemonDetails();
+  }
+
+  checkPokemonBoundaries() {
+    this.isFirstPokemon = this.pokemon.id === 1;
+    this.isLastPokemon = this.pokemon.id === 1008; 
   }
 
   async loadPokemonDetails() {
@@ -58,7 +68,6 @@ export class PokemonDetailComponent implements OnInit {
       const species = await this.pokemonService.getPokemonSpecies(this.pokemon.id);
       const evolutionData = await this.pokemonService.getEvolutionChain(this.pokemon.id);
 
-      // Lade die Beschreibung
       const englishFlavors = (species as PokemonSpecies).flavor_text_entries
         .filter((entry: FlavorTextEntry) => entry.language.name === 'en');
       if (englishFlavors.length > 0) {
@@ -66,7 +75,6 @@ export class PokemonDetailComponent implements OnInit {
           .replace(/\f/g, ' ');
       }
 
-      // Verarbeite die Evolutionskette
       await this.processEvolutionChain(evolutionData as EvolutionChain);
     } catch (error) {
       console.error('Error loading pokemon details:', error);
@@ -79,9 +87,9 @@ export class PokemonDetailComponent implements OnInit {
 
     while (currentStage) {
       try {
-        const pokemonData = await this.pokemonService
-          .getPokemonByName(currentStage.species.name)
-          .toPromise();
+        const pokemonData = await firstValueFrom(
+          this.pokemonService.getPokemonByName(currentStage.species.name)
+        );
 
         if (pokemonData && pokemonData.sprites?.other?.home?.front_default) {
           chain.push({
@@ -97,6 +105,42 @@ export class PokemonDetailComponent implements OnInit {
     }
 
     this.evolutionChain = chain;
+  }
+
+  async navigateToNext() {
+    if (!this.isLastPokemon) {
+      try {
+        const nextPokemon = await firstValueFrom(
+          this.pokemonService.getPokemon(this.pokemon.id + 1)
+        );
+        
+        if (nextPokemon) {
+          this.pokemon = nextPokemon;
+          this.checkPokemonBoundaries();
+          await this.loadPokemonDetails();
+        }
+      } catch (error) {
+        console.error('Error loading next pokemon:', error);
+      }
+    }
+  }
+
+  async navigateToPrevious() {
+    if (!this.isFirstPokemon) {
+      try {
+        const prevPokemon = await firstValueFrom(
+          this.pokemonService.getPokemon(this.pokemon.id - 1)
+        );
+        
+        if (prevPokemon) {
+          this.pokemon = prevPokemon;
+          this.checkPokemonBoundaries();
+          await this.loadPokemonDetails();
+        }
+      } catch (error) {
+        console.error('Error loading previous pokemon:', error);
+      }
+    }
   }
 
   getStatColor(value: number): string {

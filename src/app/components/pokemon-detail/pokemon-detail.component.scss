@@ -2,6 +2,29 @@
   padding: 24px;
   width: 500px;
   margin: 0 auto;
+  position: relative;
+}
+
+.nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  color: white;
+  z-index: 10;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.prev-button {
+  left: 10px;
+}
+
+.next-button {
+  right: 10px;
 }
 
 .card {
@@ -317,6 +340,23 @@
     min-height: 500px;
     padding: 16px;
   }
+
+  .nav-button {
+    transform: translateY(-50%) scale(0.8);
+    
+    &.prev-button {
+      left: 8px;
+    }
+    
+    &.next-button {
+      right: 8px;
+    }
+  }
+
+  .image-container img {
+    width: 150px;
+    height: 150px;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -332,6 +372,11 @@
     .header h2 {
       font-size: 1.5rem;
     }
+  }
+
+  .image-container img {
+    width: 120px;
+    height: 120px;
   }
 
   .evolution-chain {
@@ -364,13 +409,20 @@
     }
   }
 
-  ::ng-deep {
-    .mat-mdc-tab {
-      padding: 0 12px;
-      
-      mat-icon {
-        font-size: 18px;
-      }
+  .nav-button {
+    transform: translateY(-50%) scale(0.7);
+    
+    &.prev-button {
+      left: 5px;
     }
+    
+    &.next-button {
+      right: 5px;
+    }
+  }
+
+  .types span {
+    font-size: 0.8rem;
+    padding: 3px 10px;
   }
 }
